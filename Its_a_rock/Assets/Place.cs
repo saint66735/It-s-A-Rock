@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Place : MonoBehaviour {
 
-    public GameObject building;
     public Transform planet;
+    public GameLogic gameLogic;
+    public int currentBuilding = 0;
 	// Use this for initialization
 	void Start () {
-		
+        currentBuilding = 1;
 	}
 
     // Update is called once per frame
@@ -25,9 +26,16 @@ public class Place : MonoBehaviour {
 
                 position = hitInfo.point;
 
-                GameObject temp = Instantiate(building, position, new Quaternion());
+                GameObject temp = Instantiate(gameLogic.buildingGameObjects[currentBuilding],
+                    position, new Quaternion());
                 temp.transform.rotation = Quaternion.LookRotation(2*transform.position - planet.position);
                 temp.transform.parent = planet;
+                if (gameLogic.buildings[currentBuilding].type == "turret")
+                {
+                    temp.GetComponent<Shoot>().currentBuilding = gameLogic.buildings[currentBuilding];
+                    temp.GetComponent<Shoot>().gameLogic = gameLogic;
+                }
+                else if (gameLogic.buildings[currentBuilding].type == "money") gameLogic.moneyBuildingCount++;
 
 
             }
