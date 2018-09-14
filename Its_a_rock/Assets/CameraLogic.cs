@@ -7,7 +7,6 @@ public class CameraLogic : MonoBehaviour {
     float speed = 0.2f;
     public GameObject planet;
     float initialDistance;
-    float movementSpeed = 0.2f;
     // Use this for initialization
     void Start()
     {
