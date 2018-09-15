@@ -33,6 +33,7 @@ public class Enemy : MonoBehaviour {
     }
     void Die()
     {
+        gameLogic.enemySpawnInterval *= 0.98f;
         int id = gameLogic.enemies.IndexOf(gameObject);
         gameLogic.enemies.RemoveAt(id);
         Destroy(gameObject);

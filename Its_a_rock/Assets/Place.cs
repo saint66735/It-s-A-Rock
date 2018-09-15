@@ -38,6 +38,7 @@ public class Place : MonoBehaviour {
                 else if (gameLogic.buildings[currentBuilding].type == "money") gameLogic.moneyBuildingCount++;
 
                 gameLogic.money -= gameLogic.buildings[currentBuilding].cost;
+                gameLogic.buildings[currentBuilding].cost *= 1.1f;
             }
         }
     }

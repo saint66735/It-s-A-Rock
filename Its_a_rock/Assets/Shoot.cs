@@ -41,8 +41,8 @@ public class Shoot : MonoBehaviour {
                 if (max > 0 && max < 6)
                 {
                     enemies[maxEnemyID].GetComponent<Enemy>().health -= currentBuilding.damage;
-                    timeSinceShoot = 0;
                 }
+                timeSinceShoot = 0;
             }
         }
 	}
