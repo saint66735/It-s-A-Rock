@@ -41,7 +41,8 @@ public class GameLogic : MonoBehaviour {
     public float planetHealth = 50;
 
     float enemySpawnTime = 0;
-    float enemySpawnInterval = 5;
+    public float enemySpawnInterval = 5;
+    public float enemyHealth = 3;
 
 
     // Use this for initialization
@@ -66,7 +67,7 @@ public class GameLogic : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         enemySpawnTime += Time.deltaTime;
         moneyTime += Time.deltaTime;
         if (moneyTime >= 1)
@@ -80,9 +81,8 @@ public class GameLogic : MonoBehaviour {
         if (enemySpawnTime > enemySpawnInterval)
         {
             SpawnEnemy();
-
+            enemyHealth += 0.2f;
             enemySpawnTime = 0;
-            enemySpawnInterval = enemySpawnInterval * 0.96f;
         }
 	}
     public void updateBuildingValue()
@@ -95,7 +95,7 @@ public class GameLogic : MonoBehaviour {
         GameObject temp = Instantiate(enemy, position, new Quaternion());
         temp.transform.LookAt(planet);
         enemies.Add(temp);
-        temp.GetComponent<Enemy>().health = 3;
+        temp.GetComponent<Enemy>().health = enemyHealth;
         temp.GetComponent<Enemy>().gameLogic = gameLogic;
         temp.GetComponent<Enemy>().planet = planet;
     }
