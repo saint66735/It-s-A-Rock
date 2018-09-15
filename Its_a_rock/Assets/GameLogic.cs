@@ -82,7 +82,7 @@ public class GameLogic : MonoBehaviour {
             SpawnEnemy();
 
             enemySpawnTime = 0;
-            enemySpawnInterval = enemySpawnInterval * 0.9f;
+            enemySpawnInterval = enemySpawnInterval * 0.96f;
         }
 	}
     public void updateBuildingValue()
