@@ -9,13 +9,12 @@ public class Place : MonoBehaviour {
     public int currentBuilding = 0;
 	// Use this for initialization
 	void Start () {
-        currentBuilding = 1;
 	}
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && gameLogic.money>=gameLogic.buildings[currentBuilding].cost)
         { 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -37,8 +36,9 @@ public class Place : MonoBehaviour {
                 }
                 else if (gameLogic.buildings[currentBuilding].type == "money") gameLogic.moneyBuildingCount++;
 
-
+                gameLogic.money -= gameLogic.buildings[currentBuilding].cost;
             }
         }
     }
+    
 }
