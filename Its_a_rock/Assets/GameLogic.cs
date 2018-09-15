@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public struct Building
 {
@@ -26,14 +27,27 @@ public class GameLogic : MonoBehaviour {
     public float money = 0;
     public GameObject[] buildingGameObjects;
     public List<GameObject> enemies = new List<GameObject>();
+    public Dropdown dropdown;
+    public Text moneyDisplay;
+    public Place place;
+    public GameObject enemy;
+    public Transform planet;
+    public GameLogic gameLogic;
+    public Text planetHealthDisplay;
 
     public Building[] buildings = new Building[4];
     public float moneyBuildingCount = 0;
     float moneyTime = 0;
+    public float planetHealth = 50;
+
+    float enemySpawnTime = 0;
+    float enemySpawnInterval = 5;
 
 
     // Use this for initialization
     void Start () {
+        gameLogic = gameObject.GetComponent<GameLogic>();
+
         buildings[0] = new Building("factory","money",10,0,0);
         buildings[1] = new Building("laser", "turret", 10, 1, 0.5f);
         buildings[2] = new Building("railgun", "turret", 30, 15, 2);
@@ -41,13 +55,49 @@ public class GameLogic : MonoBehaviour {
 
         //enemies = new List<GameObject>();
         money = 30;
+        dropdown.options.Clear();
+        foreach (var building in buildings)
+        {
+            Dropdown.OptionData option = new Dropdown.OptionData(building.name +" "+ building.cost+"$");
+            dropdown.options.Add(option);
+        }
+        dropdown.captionText.text = dropdown.options[0].text;
+
     }
 	
 	// Update is called once per frame
 	void Update () {
+        enemySpawnTime += Time.deltaTime;
+        moneyTime += Time.deltaTime;
         if (moneyTime >= 1)
         {
-            money += 1 * moneyBuildingCount;
+            money += moneyBuildingCount;
+            moneyTime = 0;
+        }
+        moneyDisplay.text = "money:" + money;
+        planetHealthDisplay.text = "health:" + planetHealth;
+
+        if (enemySpawnTime > enemySpawnInterval)
+        {
+            SpawnEnemy();
+
+            enemySpawnTime = 0;
+            enemySpawnInterval = enemySpawnInterval * 0.9f;
         }
 	}
+    public void updateBuildingValue()
+    {
+        place.currentBuilding = dropdown.value;
+    }
+    public void SpawnEnemy()
+    {
+        Vector3 position = Random.onUnitSphere*15;
+        GameObject temp = Instantiate(enemy, position, new Quaternion());
+        temp.transform.LookAt(planet);
+        enemies.Add(temp);
+        temp.GetComponent<Enemy>().health = 3;
+        temp.GetComponent<Enemy>().gameLogic = gameLogic;
+        temp.GetComponent<Enemy>().planet = planet;
+    }
+
 }

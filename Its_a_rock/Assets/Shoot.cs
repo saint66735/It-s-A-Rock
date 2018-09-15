@@ -25,12 +25,16 @@ public class Shoot : MonoBehaviour {
             foreach (var enemy in enemies)
             {
                 RaycastHit hit;
-                if (!Physics.Linecast(enemy.transform.position, transform.position,out hit))
+                if (enemy != null)
                 {
-                    float dist = Vector3.Distance(enemy.transform.position, transform.position);
-                    if (dist > max) { max = dist; maxEnemyID = enemies.IndexOf(enemy); }
+                    if (!Physics.Linecast(enemy.transform.position, transform.position, out hit))
+                    {
+                        float dist = Vector3.Distance(enemy.transform.position, transform.position);
+                        if (dist > max) { max = dist; maxEnemyID = enemies.IndexOf(enemy); }
+                    }
+                    else Debug.Log(hit.collider.gameObject.name);
                 }
-                else Debug.Log(hit.collider.gameObject.name);
+                else enemies.TrimExcess();
             }
 
             if (max > 0)
