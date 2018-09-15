@@ -28,6 +28,7 @@ public class Place : MonoBehaviour {
                 GameObject temp = Instantiate(gameLogic.buildingGameObjects[currentBuilding],
                     position, new Quaternion());
                 temp.transform.rotation = Quaternion.LookRotation(2*transform.position - planet.position);
+                temp.transform.Rotate(new Vector3(90, 0, 0));
                 temp.transform.parent = planet;
                 if (gameLogic.buildings[currentBuilding].type == "turret")
                 {
