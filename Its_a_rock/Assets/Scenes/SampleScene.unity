@@ -646,8 +646,8 @@ MonoBehaviour:
   money: 0
   buildingGameObjects:
   - {fileID: 1030329660952348, guid: 39998b371feb46f4b8e2218b20a01ca1, type: 2}
-  - {fileID: 1086103167974178, guid: bb836e10382d7ba4d9d64e0a9918735c, type: 2}
-  - {fileID: 1086103167974178, guid: bb836e10382d7ba4d9d64e0a9918735c, type: 2}
+  - {fileID: 1138664528474534, guid: 32001170651e61d4a91860c6763a4b9b, type: 2}
+  - {fileID: 1382492565921044, guid: 8f29ed8aa1b947042b851e9637bf0096, type: 2}
   - {fileID: 1086103167974178, guid: bb836e10382d7ba4d9d64e0a9918735c, type: 2}
   enemies:
   - {fileID: 0}

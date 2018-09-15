@@ -13,34 +13,32 @@ public class Shoot : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         timeSinceShoot += Time.deltaTime;
 
-        
-        List<GameObject> enemies = gameLogic.enemies;
-        if (enemies.Count > 0)
+        if (timeSinceShoot > currentBuilding.shootInterval)
         {
-            float max = 0;
-            int maxEnemyID = 0;
-            foreach (var enemy in enemies)
+            List<GameObject> enemies = gameLogic.enemies;
+            if (enemies.Count > 0)
             {
-                RaycastHit hit;
-                if (enemy != null)
+                float max = 0;
+                int maxEnemyID = 0;
+                foreach (var enemy in enemies)
                 {
-                    if (!Physics.Linecast(enemy.transform.position, transform.position, out hit))
+                    RaycastHit hit;
+                    if (enemy != null)
                     {
-                        float dist = Vector3.Distance(enemy.transform.position, transform.position);
-                        if (dist > max) { max = dist; maxEnemyID = enemies.IndexOf(enemy); }
+                        if (!Physics.Linecast(enemy.transform.position, transform.position, out hit))
+                        {
+                            float dist = Vector3.Distance(enemy.transform.position, transform.position);
+                            if (dist > max) { max = dist; maxEnemyID = enemies.IndexOf(enemy); }
+                        }
+                        else Debug.Log(hit.collider.gameObject.name);
                     }
-                    else Debug.Log(hit.collider.gameObject.name);
+                    //else enemies.TrimExcess();
                 }
-                else enemies.TrimExcess();
-            }
 
-            if (max > 0)
-            {
-                Debug.Log("k");
-                if (timeSinceShoot > currentBuilding.shootInterval)
+                if (max > 0 && max < 6)
                 {
                     enemies[maxEnemyID].GetComponent<Enemy>().health -= currentBuilding.damage;
                     timeSinceShoot = 0;
